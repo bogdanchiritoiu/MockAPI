@@ -1,0 +1,14 @@
+[
+  {
+    "endpoint" : "cars",
+    "methods" : "all",
+    "fields" : {
+      "model": "String",
+      "manufacturer": "String",
+      "year" : "Integer",
+      "color" :  "String",
+      "mileage" : "Integer"
+    },
+    "count" : 50
+  }
+]

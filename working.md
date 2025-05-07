@@ -17,3 +17,13 @@
 ### Create and populate the database
 
 ### Create the endpoints
+
+
+### WIP
+The main structure
+
+EndpointStructureDef
+
+name: String
+count: int
+fields: Map <name, Type>
