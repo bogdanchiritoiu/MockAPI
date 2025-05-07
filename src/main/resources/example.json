@@ -1,0 +1,25 @@
+[
+  {
+    "path": "/dynamic/users",
+    "method": "GET",
+    "response": {
+      "message": "List of dynamic users"
+    }
+  },
+  {
+    "path": "/dynamic/products/{id}",
+    "method": "GET",
+    "response": {
+      "id": "${id}",
+      "name": "Dynamic Product"
+    }
+  },
+  {
+    "path": "/dynamic/orders",
+    "method": "POST",
+    "responseCode": 201,
+    "response": {
+      "message": "Dynamic order created"
+    }
+  }
+]
