@@ -7,7 +7,6 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,9 +29,9 @@ import java.util.Map;
  * @see ConfigFileParser
  * @since 1.0
  */
-//TODO to rename class
 @Service
-public class MyBusinessService {
+public class MockApiConfigurationService
+{
     private final ConfigFileParser configFileParser;
 
     /**
@@ -42,7 +41,7 @@ public class MyBusinessService {
      */
 
     @Autowired
-    public MyBusinessService(ConfigFileParser configFileParser) {
+    public MockApiConfigurationService(ConfigFileParser configFileParser) {
         this.configFileParser = configFileParser;
     }
 

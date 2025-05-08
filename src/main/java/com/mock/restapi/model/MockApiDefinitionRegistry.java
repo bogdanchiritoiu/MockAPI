@@ -6,7 +6,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-//TODO add java doc and comments
+/**
+ * A registry class responsible for managing and maintaining a collection of {@link MockApiDefinition} objects.
+ * This class operates as a singleton and provides functionalities for adding, retrieving, and clearing mock API definitions.
+ *
+ * The service is initialized as a Spring-managed bean and stores the registered mock API definitions in a thread-safe list.
+ */
 @Service
 public class MockApiDefinitionRegistry
 {

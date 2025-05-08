@@ -7,7 +7,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-//TODO add java doc and comments
+/**
+ * Represents a mock API endpoint definition containing configuration details for generating mock responses.
+ * This class holds information about the endpoint name, field definitions, supported HTTP methods,
+ * and the number of mock entries to generate.
+ *
+ * <p>The class ensures all essential components are non-null through constructor validation.
+ */
 public class MockApiDefinition
 {
     private final String endpointName;
@@ -15,6 +21,15 @@ public class MockApiDefinition
     private final Set<RequestMethod> methods;
     private final int count;
 
+    /**
+     * Constructs a new MockApiDefinition with the specified parameters.
+     *
+     * @param endpointName the name/path of the endpoint (must not be null)
+     * @param fields       a map of field names to their type representations (must not be null)
+     * @param methods      a string representing the supported HTTP methods (must not be null)
+     * @param count        the number of mock entries to generate
+     * @throws NullPointerException if endpointName, fields, or methods is null
+     */
     public MockApiDefinition(String endpointName, Map<String, String> fields, String methods, int count)
     {
         this.endpointName = Objects.requireNonNull(endpointName, "Endpoint name must not be null");
@@ -23,21 +38,38 @@ public class MockApiDefinition
         this.count = count;
     }
 
-    public String getEndpointName()
-    {
+    /**
+     * Returns the name/path of the mock API endpoint.
+     *
+     * @return the endpoint name
+     */
+    public String getEndpointName() {
         return endpointName;
     }
 
-    public Map<String, Class<?>> getFields()
-    {
+    /**
+     * Returns the map of field names to their corresponding Java types.
+     *
+     * @return the fields map
+     */
+    public Map<String, Class<?>> getFields() {
         return fields;
     }
 
-    public Set<RequestMethod> getMethods()
-    {
+    /**
+     * Returns the set of supported HTTP request methods for this endpoint.
+     *
+     * @return the set of request methods
+     */
+    public Set<RequestMethod> getMethods() {
         return methods;
     }
 
+    /**
+     * Returns the number of mock entries to generate.
+     *
+     * @return the count of entries
+     */
     public int getCount()
     {
         return count;

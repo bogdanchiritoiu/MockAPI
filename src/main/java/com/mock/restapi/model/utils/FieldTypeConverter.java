@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 //TODO add java doc and comments
-//TODO maybe split the file HTTP request and field converter OR use proper class naem
+//TODO maybe split the file HTTP request and field converter OR use proper class name
 public final class FieldTypeConverter
 {
     private static final Map<String, Class<?>> TYPE_MAP = new HashMap<>();
