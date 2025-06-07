@@ -1,4 +1,4 @@
-package com.mock.restapi;
+package com.mock.restapi.controller;
 
 import com.mock.restapi.model.MockApiDefinition;
 import com.mock.restapi.model.MockApiDefinitionRegistry;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

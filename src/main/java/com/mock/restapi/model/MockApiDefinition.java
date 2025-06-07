@@ -1,6 +1,6 @@
 package com.mock.restapi.model;
 
-import com.mock.restapi.model.utils.FieldTypeConverter;
+import com.mock.restapi.util.FieldTypeConverter;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Map;

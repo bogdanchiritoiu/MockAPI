@@ -1,4 +1,4 @@
-package com.mock.restapi.model.utils;
+package com.mock.restapi.util;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 
