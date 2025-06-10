@@ -2,6 +2,7 @@ package com.mock.restapi.controller;
 
 import com.mock.restapi.model.MockApiDefinition;
 import com.mock.restapi.model.MockApiDefinitionRegistry;
+import com.mock.restapi.service.generator.DataService;
 import jakarta.annotation.PostConstruct;
 //import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.SmartInitializingSingleton;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import javax.xml.crypto.Data;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Objects;
@@ -51,13 +53,16 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
     private ApplicationContext applicationContext;
     private final MockApiDefinitionRegistry definitionRegistry;
     private final RequestMappingHandlerMapping handlerMapping;
+    private final DataService dataService; // To change
 
     @Autowired
     public DynamicEndpointRegistrar(MockApiDefinitionRegistry definitionRegistry,
-                                    @Qualifier("requestMappingHandlerMapping") RequestMappingHandlerMapping requestMappingHandlerMapping)
+                                    @Qualifier("requestMappingHandlerMapping") RequestMappingHandlerMapping requestMappingHandlerMapping,
+                                    DataService dataService)
     {
         this.definitionRegistry = definitionRegistry;
         this.handlerMapping = requestMappingHandlerMapping;
+        this.dataService = dataService;
     }
 
     @Override
@@ -79,6 +84,8 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
             for (MockApiDefinition definition : definitionRegistry.getDefinitions())
             {
                 registerEndpointHandlers(definition);
+                // TODO to delete - just for debug
+                dataService.generateAndProcessData(definition);
             }
         }
         catch (Exception e)
