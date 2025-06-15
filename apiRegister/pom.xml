@@ -18,15 +18,21 @@
     </properties>
 
     <dependencies>
+        <!-- Internal -->
         <dependency>
             <groupId>com.mock</groupId>
             <artifactId>model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.mock</groupId>
             <artifactId>generator</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!-- External -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
+
 </project>
