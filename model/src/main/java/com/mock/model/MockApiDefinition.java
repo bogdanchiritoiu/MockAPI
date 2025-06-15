@@ -11,7 +11,10 @@ import java.util.Set;
  * Configuration holder for mock API endpoints.
  * Contains endpoint name, field definitions, HTTP methods, and entry count.
  */
-public class MockApiDefinition {
+public class MockApiDefinition
+{
+    private final String name;
+
     /** Name/path of the mock API endpoint */
     private final String endpointName;
     
@@ -28,31 +31,43 @@ public class MockApiDefinition {
      * Creates a new com.mock.model.MockApiDefinition.
      * @throws NullPointerException if any required parameter is null
      */
-    public MockApiDefinition(String endpointName, Map<String, String> fields, String methods, int count) {
+    public MockApiDefinition(String name, String endpointName, Map<String, String> fields, String methods, int count)
+    {
+        this.name = name;
         this.endpointName = Objects.requireNonNull(endpointName, "Endpoint name must not be null");
         this.fields = FieldTypeConverter.convertFieldTypes(Objects.requireNonNull(fields, "Fields must not be null"));
         this.methods = FieldTypeConverter.convertToRequestMethods(Objects.requireNonNull(methods, "Methods must not be null"));
         this.count = count;
     }
 
-    public String getEndpointName() {
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getEndpointName()
+    {
         return endpointName;
     }
 
-    public Map<String, Class<?>> getFields() {
+    public Map<String, Class<?>> getFields()
+    {
         return fields;
     }
 
-    public Set<RequestMethod> getMethods() {
+    public Set<RequestMethod> getMethods()
+    {
         return methods;
     }
 
-    public int getCount() {
+    public int getCount()
+    {
         return count;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "com.mock.model.MockApiDefinition{" +
                 "endpointName='" + endpointName + '\'' +
                 ", count=" + count +

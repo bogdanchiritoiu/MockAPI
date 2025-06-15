@@ -59,22 +59,30 @@ public class ApiConfigurationService
     @PostConstruct
     private void processData()
     {
-        JsonNode config = configFileParser.getRootNode().get(0);
+        for (JsonNode config : configFileParser.getAllEndpoints())
+        {
+            //Register the com.mock.model.MockApiDefinition
+            MockApiDefinitionRegistry mockApiDefinitionRegistry = MockApiDefinitionRegistry.getInstance();
+            mockApiDefinitionRegistry.addDefinition(new MockApiDefinition(configFileParser.getName(config),
+                                                                        configFileParser.getEndpoint(config),
+                                                                        configFileParser.getFields(config),
+                                                                        configFileParser.getMethods(config),
+                                                                        configFileParser.getCount(config)));
 
-        //Register the com.mock.model.MockApiDefinition
-        MockApiDefinitionRegistry mockApiDefinitionRegistry = MockApiDefinitionRegistry.getInstance();
-        mockApiDefinitionRegistry.addDefinition(new MockApiDefinition(configFileParser.getEndpoint(), configFileParser.getFields(), configFileParser.getMethods(), configFileParser.getCount()));
+            /* Only for debug */
+            String name = configFileParser.getName(config);
+            String endpointName = configFileParser.getEndpoint(config);
+            String methodsType = configFileParser.getMethods(config);
+            Map<String, String> fields = configFileParser.getFields(config);
+            int count = configFileParser.getCount(config);
 
-        String endpointName = configFileParser.getEndpoint();
-        String methodsType = configFileParser.getMethods();
-        Map<String, String> fields = configFileParser.getFields();
-        int count = configFileParser.getCount();
-
-        // For debugging/verification
-        System.out.println("Endpoint: " + endpointName);
-        System.out.println("Methods: " + methodsType);
-        System.out.println("Fields map: " + fields);
-        System.out.println("Count: " + count);
+            // For debugging/verification
+            System.out.println("Name: " + name);
+            System.out.println("Endpoint: " + endpointName);
+            System.out.println("Methods: " + methodsType);
+            System.out.println("Fields map: " + fields);
+            System.out.println("Count: " + count);
+        }
 
     }
 }

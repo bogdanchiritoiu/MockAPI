@@ -1,5 +1,6 @@
 [
   {
+    "name" : "cars",
     "endpoint" : "cars",
     "methods" : "all",
     "fields" : {
@@ -9,6 +10,17 @@
       "color" :  "String",
       "mileage" : "Integer"
     },
-    "count" : 50
+    "count" : 2
+  },
+  {
+    "name" : "houses",
+    "endpoint" : "house",
+    "methods" : "get",
+    "fields" : {
+      "type": "String",
+      "levels": "int",
+      "year" : "Integer"
+    },
+    "count" : 1
   }
 ]

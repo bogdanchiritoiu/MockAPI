@@ -18,7 +18,7 @@ public class DataService
     public String generateAndProcessData(MockApiDefinition definition)
     {
         String jsonData = dataGeneratorService.generatedMockData(definition);
-        System.out.println("Generated JSON data: " + jsonData);
+        System.out.println("Generated JSON data for [" + definition.getName() + "] : " + jsonData);
 
         return dataGeneratorService.generatedMockData(definition);
     }

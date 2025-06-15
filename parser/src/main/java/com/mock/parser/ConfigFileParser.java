@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -36,58 +38,72 @@ public class ConfigFileParser
         ClassPathResource resource = new ClassPathResource(jsonFilePath);
         try (InputStream inputStream = resource.getInputStream())
         {
-            this.rootNode = objectMapper.readTree(inputStream).get(0);
+            this.rootNode = objectMapper.readTree(inputStream);
         }
         catch (IOException e)
         {
             System.err.println("Error reading JSON file: " + jsonFilePath);
-            throw e; // Re-throw to signal initialization failure
+            throw e;
         }
     }
-
-    public JsonNode getRootNode()
-    {
-        return rootNode;
-    }
-
-    public String getEndpoint()
+    
+    public List<JsonNode> getAllEndpoints()
     {
         if (rootNode == null)
         {
             return null;
         }
-        return rootNode.get("endpoint").asText();
+        else
+        {
+            List<JsonNode> endpoints = new ArrayList<>();
+            rootNode.forEach(endpoints::add);
+            return endpoints;
+        }
     }
 
-    public String getMethods()
+    public String getName(JsonNode node)
     {
-        if (rootNode == null)
+        return node.get("name").asText();
+    }
+
+    public String getEndpoint(JsonNode node)
+    {
+        if (node == null)
         {
             return null;
         }
-        return rootNode.get("methods").asText();
+        return node.get("endpoint").asText();
     }
 
-    public Map<String, String> getFields()
+    public String getMethods(JsonNode node)
+    {
+        if (node == null)
+        {
+            return null;
+        }
+        return node.get("methods").asText();
+    }
+
+    public Map<String, String> getFields(JsonNode node)
     {
         Map<String, String> fieldsMap = new HashMap<>();
-        if (rootNode == null)
+        if (node == null)
         {
             return null;
         }
-        rootNode.get("fields")
+        node.get("fields")
                 .fields()
                 .forEachRemaining(entry -> fieldsMap.put(entry.getKey(),entry.getValue().asText()));
 
         return fieldsMap;
     }
 
-    public Integer getCount()
+    public Integer getCount(JsonNode node)
     {
-        if (rootNode == null)
+        if (node == null)
         {
             return null;
         }
-        return rootNode.get("count").asInt();
+        return node.get("count").asInt();
     }
 }
