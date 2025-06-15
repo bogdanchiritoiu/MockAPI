@@ -11,6 +11,7 @@
 	<groupId>com.mock</groupId>
 	<artifactId>restapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>Mock Restapi</name>
 	<description>MockApi Project</description>
 	<url/>
@@ -20,6 +21,13 @@
 	<developers>
 		<developer/>
 	</developers>
+	<modules>
+		<module>parser</module>
+		<module>generator</module>
+		<module>model</module>
+		<module>apiRegister</module>
+		<module>mockRestapiApp</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
@@ -56,14 +64,5 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>

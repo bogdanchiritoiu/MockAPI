@@ -15,7 +15,7 @@ This section details the conceptual steps and implementation considerations for 
 
 **Explanation of Key Components:**
 
-* **`DynamicEndpointRegistrar`:**
+* **`com.mock.api.register.DynamicEndpointRegistrar`:**
     * This Spring component implements `ApplicationContextAware` to access the application context.
     * The `@PostConstruct` annotation ensures that the `registerDynamicEndpoints()` method is executed after the bean is initialized and the application context is available.
     * It retrieves the `RequestMappingHandlerMapping` bean from the application context, which is the core component for managing request-to-handler mappings in Spring MVC.
