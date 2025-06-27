@@ -101,7 +101,7 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
             Method getAllMethod = DynamicRequestHandler.class.getDeclaredMethod("handleGet");
 
             RequestMappingInfo getMapping = RequestMappingInfo
-                    .paths(basePath + "/{id}")
+                    .paths(basePath + ID_PATH_VARIABLE)
                     .methods(RequestMethod.GET)
                     .produces(MediaType.APPLICATION_JSON_VALUE)
                     .build();
@@ -132,7 +132,7 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
         {
             Method putMethod = DynamicRequestHandler.class.getDeclaredMethod("handlePut", String.class, Map.class);
             RequestMappingInfo putMapping = RequestMappingInfo
-                    .paths(basePath + "/{id}")
+                    .paths(basePath + ID_PATH_VARIABLE)
                     .methods(RequestMethod.PUT)
                     .produces(MediaType.APPLICATION_JSON_VALUE)
                     .build();
@@ -144,7 +144,7 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
         {
             Method deleteMethod = DynamicRequestHandler.class.getDeclaredMethod("handleDelete", String.class);
             RequestMappingInfo deleteMapping = RequestMappingInfo
-                    .paths(basePath + "/{id}")
+                    .paths(basePath + ID_PATH_VARIABLE)
                     .methods(RequestMethod.DELETE)
                     .produces(MediaType.APPLICATION_JSON_VALUE)
                     .build();

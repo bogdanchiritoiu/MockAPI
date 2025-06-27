@@ -21,15 +21,15 @@ public class ConfigFileParser
 {
     private JsonNode rootNode;
 
-    @Value("${json.file.path:default.json}")
-    private String jsonFilePath;
+    private final String jsonFilePath;
 
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public ConfigFileParser(ObjectMapper objectMapper)
+    public ConfigFileParser(ObjectMapper objectMapper, @Value("${json.file.path:data.json}") String jsonFilePath)
     {
         this.objectMapper = Objects.requireNonNull(objectMapper, "ObjectMapper must not be null");
+        this.jsonFilePath = Objects.requireNonNull(jsonFilePath, "JSON file path must not be null");
     }
 
     @PostConstruct
