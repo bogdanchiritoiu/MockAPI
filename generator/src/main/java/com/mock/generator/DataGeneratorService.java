@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.mock.database.entity.GeneratedData;
+import com.mock.database.repository.GeneratedDataRepository;
 import com.mock.model.MockApiDefinition;
 import org.springframework.stereotype.Service;
 import com.mock.generator.util.ValueGenerator;
@@ -23,6 +25,12 @@ import java.util.Map;
 public class DataGeneratorService
 {
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final GeneratedDataRepository generatedDataRepository;
+
+    public DataGeneratorService(GeneratedDataRepository generatedDataRepository)
+    {
+        this.generatedDataRepository = generatedDataRepository;
+    }
 
     /*
        Generate mock data based on the provided com.mock.model.MockApiDefinition
@@ -35,7 +43,7 @@ public class DataGeneratorService
 
             for (int i = 0; i < definition.getCount(); i++)
             {
-                arrayNode.add(generateSingleEntry(definition.getFields()));
+                arrayNode.add(generateSingleEntry(definition.getName(), definition.getFields()));
             }
 
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(arrayNode);
@@ -46,7 +54,7 @@ public class DataGeneratorService
         }
     }
 
-    private ObjectNode generateSingleEntry(Map<String, Class<?>> fields)
+    private ObjectNode generateSingleEntry(String endpoint, Map<String, Class<?>> fields)
     {
         ObjectNode objectNode = objectMapper.createObjectNode();
 
@@ -57,6 +65,15 @@ public class DataGeneratorService
 
             objectNode.put(fieldName, String.valueOf(fieldValue));
         }
+        // TODO change the way of saving; to pass endpoint and data
+        int nextInternalId = generatedDataRepository
+                .findTopByEndpointOrderByInternalIdDesc(endpoint)
+                .map(GeneratedData::getInternalId)
+                .orElse(0) + 1;
+        GeneratedData newGeneratedData = new GeneratedData(endpoint, objectNode.toPrettyString());
+        newGeneratedData.setInternalId(nextInternalId);
+
+        generatedDataRepository.save(newGeneratedData);
 
         return objectNode;
     }

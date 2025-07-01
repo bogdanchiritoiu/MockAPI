@@ -21,10 +21,6 @@
         <!-- Internal -->
         <dependency>
             <groupId>com.mock</groupId>
-            <artifactId>model</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mock</groupId>
             <artifactId>generator</artifactId>
         </dependency>
 

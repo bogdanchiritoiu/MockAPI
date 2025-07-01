@@ -4,8 +4,19 @@ import com.mock.database.entity.GeneratedData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface GeneratedDataRepository extends JpaRepository<GeneratedData, Long>
 {
-    // Nothing
+    Optional<GeneratedData> findTopByEndpointOrderByInternalIdDesc(String endpoint);
+
+    /**
+     * Look up a single GeneratedData by its endpoint and internalId.
+     */
+    Optional<GeneratedData> findByEndpointAndInternalId(String endpoint, int internalId);
+
+    List<GeneratedData> findByEndpoint(String endpoint);
+
 }

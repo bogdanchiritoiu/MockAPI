@@ -23,6 +23,12 @@
             <groupId>com.mock</groupId>
             <artifactId>model</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.mock</groupId>
+            <artifactId>database</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- External -->
         <dependency>

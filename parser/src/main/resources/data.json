@@ -14,13 +14,14 @@
   },
   {
     "name" : "houses",
-    "endpoint" : "house",
+    "endpoint" : "houses",
     "methods" : "get",
     "fields" : {
       "type": "String",
       "levels": "int",
-      "year" : "Integer"
+      "year" : "Integer",
+      "sold" : "boolean"
     },
-    "count" : 1
+    "count" : 3
   }
 ]

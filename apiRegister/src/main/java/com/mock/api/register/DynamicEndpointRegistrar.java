@@ -1,10 +1,9 @@
 package com.mock.api.register;
 
-import com.mock.generator.DataService;
 import com.mock.model.MockApiDefinition;
 import com.mock.model.MockApiDefinitionRegistry;
 import jakarta.annotation.PostConstruct;
-//import lombok.extern.slf4j.Slf4j;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,25 +37,25 @@ import java.util.Objects;
  * automatic detection and registration as a Spring-managed bean.
  */
 @Component
-//@DependsOn({"mockApiConfigurationService"})
 public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartInitializingSingleton
 {
-    private static final String API_BASE_PATH = "/api/";
+    // TODO move these constants in a separate folder
+    public static final String API_BASE_PATH = "/api/";
     private static final String ID_PATH_VARIABLE = "/{id}";
 
     private ApplicationContext applicationContext;
     private final MockApiDefinitionRegistry definitionRegistry;
     private final RequestMappingHandlerMapping handlerMapping;
-    private final DataService dataService; // To change
+    private final DynamicRequestHandler handler;
 
     @Autowired
     public DynamicEndpointRegistrar(MockApiDefinitionRegistry definitionRegistry,
                                     @Qualifier("requestMappingHandlerMapping") RequestMappingHandlerMapping requestMappingHandlerMapping,
-                                    DataService dataService)
+                                    DynamicRequestHandler handler)
     {
         this.definitionRegistry = definitionRegistry;
         this.handlerMapping = requestMappingHandlerMapping;
-        this.dataService = dataService;
+        this.handler = handler;
     }
 
     @Override
@@ -78,8 +77,6 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
             for (MockApiDefinition definition : definitionRegistry.getDefinitions())
             {
                 registerEndpointHandlers(definition);
-                // TODO to delete - just for debug
-                dataService.generateAndProcessData(definition);
             }
         }
         catch (Exception e)
@@ -92,13 +89,12 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
     private void registerEndpointHandlers(MockApiDefinition definition) throws NoSuchMethodException
     {
         String basePath = API_BASE_PATH + definition.getEndpointName();
-        DynamicRequestHandler handler = new DynamicRequestHandler();
 
         // Register GET endpoint
         if (definition.getMethods().contains(RequestMethod.GET))
         {
-            Method getMethod = DynamicRequestHandler.class.getDeclaredMethod("handleGet", String.class);
-            Method getAllMethod = DynamicRequestHandler.class.getDeclaredMethod("handleGet");
+            Method getMethod = DynamicRequestHandler.class.getDeclaredMethod("handleGet", String.class, HttpServletRequest.class);
+            Method getAllMethod = DynamicRequestHandler.class.getDeclaredMethod("handleGet", HttpServletRequest.class);
 
             RequestMappingInfo getMapping = RequestMappingInfo
                     .paths(basePath + ID_PATH_VARIABLE)
