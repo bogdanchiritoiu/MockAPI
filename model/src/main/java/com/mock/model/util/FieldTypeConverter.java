@@ -9,12 +9,26 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//TODO add java doc and comments
-//TODO maybe split the file HTTP request and field converter OR use proper class name
+/**
+ * Utility class that provides type conversion functionality for field types and HTTP request methods.
+ * This class serves two main purposes:
+ * <p>
+ * 1. Converting string representations of Java types to their corresponding Class objects
+ * - Supports primitive wrapper types (Integer, Long, etc.)
+ * - Supports String and common data types
+ * - Provides validation for supported types
+ * <p>
+ * 2. Converting string representations of HTTP methods to RequestMethod enums
+ * - Supports individual HTTP methods (GET, POST, etc.)
+ * - Supports "all" keyword for all main HTTP methods
+ * - Handles comma-separated lists of HTTP methods
+ * <p>
+ * All methods in this class are static, and the class cannot be instantiated.
+ *
+ */
 public final class FieldTypeConverter
 {
     private static final Map<String, Class<?>> TYPE_MAP = new HashMap<>();
-
     static
     {
         // Initialize primitive and common types
@@ -46,17 +60,6 @@ public final class FieldTypeConverter
     public static Class<?> convertToClass(String typeName)
     {
         return TYPE_MAP.get(typeName.toLowerCase());
-    }
-
-    /**
-     * Checks if the given type name is supported.
-     *
-     * @param typeName the string representation of the type
-     * @return true if the type is supported, false otherwise
-     */
-    public static boolean isSupported(String typeName)
-    {
-        return TYPE_MAP.containsKey(typeName.toLowerCase());
     }
 
     /**
@@ -101,7 +104,7 @@ public final class FieldTypeConverter
         // Handle the "all" case
         if (methodsString.trim().equalsIgnoreCase("all"))
         {
-            return EnumSet.of(RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE);
+            return getAllRequestMethods();
         }
         
         // Handle comma-separated list of methods
@@ -127,7 +130,7 @@ public final class FieldTypeConverter
         
         return methods;
     }
-    
+
     /**
      * Returns all supported HTTP methods from Spring's RequestMethod enum.
      *

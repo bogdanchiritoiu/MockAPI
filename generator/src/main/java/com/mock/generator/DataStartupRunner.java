@@ -2,7 +2,6 @@ package com.mock.generator;
 
 import com.mock.model.MockApiDefinition;
 import com.mock.model.MockApiDefinitionRegistry;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;

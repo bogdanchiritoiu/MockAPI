@@ -24,12 +24,12 @@ public final class ValueGenerator
      * This method supports generation of String, Integer, Double, and Boolean values.
      *
      * @param type      The Class object representing the type of value to generate
-     * @param fieldName The name of the field for which the value is being generated
+     * @param ignoredFieldName The name of the field for which the value is being generated
      *                  (currently unused, reserved for future implementation)
      * @return A randomly generated value of the specified type, or null if the type
      * is not supported
      */
-    public static Object generateValueForType(Class<?> type, String fieldName)
+    public static Object generateValueForType(Class<?> type, String ignoredFieldName)
     {
         if (String.class.equals(type))
         {

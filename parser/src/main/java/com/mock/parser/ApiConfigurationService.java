@@ -48,7 +48,7 @@ public class ApiConfigurationService
 
     /**
      * Initializes the service by processing the configuration data at application startup.
-     * This method validates and extracts essential configuration elements including:
+     * This method validates and extracts essential configuration elements including
      * - API endpoint information
      * - Supported HTTP methods
      * - Field definitions and their types

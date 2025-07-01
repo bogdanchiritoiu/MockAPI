@@ -9,9 +9,9 @@
 ## Workflow
 1. Start app
 2. Parse the JSON file
-   1. Structure of JSON file
+   1. Structure of a JSON file
    2. Customizability
-3. Create and populate the database based on the endpoints structure
+3. Create and populate the database based on the endpoint structure
 4. Create the endpoints using _RequestMappingHandlerMapping_ and _RequestMappingInfo_
 
 ### Create and populate the database
@@ -48,7 +48,7 @@ Let's explore the main types of databases, focusing on relational and non-relati
     * **Customer Relationship Management (CRM):** Managing customer data and interactions.
     * **Inventory management:** Tracking product stock levels and movements.
     * **Enterprise Resource Planning (ERP):** Integrating various business processes.
-    * Any application requiring strong data consistency and complex relationships between data points.
+    * Any application requires strong data consistency and complex relationships between data points.
 * **Examples:** MySQL, PostgreSQL, Oracle Database, Microsoft SQL Server, MariaDB, SQLite.
 
 ### 2. Non-Relational Databases (NoSQL Databases)
@@ -84,4 +84,4 @@ Beyond relational and the main categories of NoSQL, there are other types of dat
 * **Network Databases:** Extend the hierarchical model by allowing a child node to have multiple parent nodes, providing more flexibility in representing relationships. (e.g., IDMS).
 * **Vector Databases:** Designed to efficiently store and query high-dimensional vector embeddings. Crucial for applications involving semantic search, recommendation systems, and generative AI. (e.g., Pinecone, Weaviate, ChromaDB, Astra DB).
 
-The choice of database depends heavily on the specific requirements of the application, including the type and structure of the data, the need for scalability and availability, query patterns, and consistency requirements. Many modern applications even use a combination of different database types to leverage the strengths of each.
+The choice of a database depends heavily on the specific requirements of the application, including the type and structure of the data, the need for scalability and availability, query patterns, and consistency requirements. Many modern applications even use a combination of different database types to leverage the strengths of each.

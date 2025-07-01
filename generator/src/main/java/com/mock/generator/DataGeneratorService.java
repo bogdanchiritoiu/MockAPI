@@ -35,7 +35,7 @@ public class DataGeneratorService
     /*
        Generate mock data based on the provided com.mock.model.MockApiDefinition
      */
-    public String generatedMockData(MockApiDefinition definition)
+    public void generatedMockData(MockApiDefinition definition)
     {
         try
         {
@@ -46,7 +46,7 @@ public class DataGeneratorService
                 arrayNode.add(generateSingleEntry(definition.getName(), definition.getFields()));
             }
 
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(arrayNode);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(arrayNode);
         }
         catch (JsonProcessingException e)
         {
@@ -65,7 +65,7 @@ public class DataGeneratorService
 
             objectNode.put(fieldName, String.valueOf(fieldValue));
         }
-        // TODO change the way of saving; to pass endpoint and data
+        // TODO extract the nextInternalId generator in a separate method, anb add more checks
         int nextInternalId = generatedDataRepository
                 .findTopByEndpointOrderByInternalIdDesc(endpoint)
                 .map(GeneratedData::getInternalId)

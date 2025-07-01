@@ -1,5 +1,6 @@
 package com.mock.api.register;
 
+import com.mock.api.constants.ApiConstants;
 import com.mock.model.MockApiDefinition;
 import com.mock.model.MockApiDefinitionRegistry;
 import jakarta.annotation.PostConstruct;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * The com.mock.api.register.DynamicEndpointRegistrar class is responsible for dynamically registering REST API
@@ -37,13 +37,8 @@ import java.util.Objects;
  * automatic detection and registration as a Spring-managed bean.
  */
 @Component
-public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartInitializingSingleton
+public class DynamicEndpointRegistrar implements SmartInitializingSingleton
 {
-    // TODO move these constants in a separate folder
-    public static final String API_BASE_PATH = "/api/";
-    private static final String ID_PATH_VARIABLE = "/{id}";
-
-    private ApplicationContext applicationContext;
     private final MockApiDefinitionRegistry definitionRegistry;
     private final RequestMappingHandlerMapping handlerMapping;
     private final DynamicRequestHandler handler;
@@ -56,12 +51,6 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
         this.definitionRegistry = definitionRegistry;
         this.handlerMapping = requestMappingHandlerMapping;
         this.handler = handler;
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext)
-    {
-        this.applicationContext = Objects.requireNonNull(applicationContext, "ApplicationContext must not be null");
     }
 
     @Override
@@ -88,7 +77,7 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
 
     private void registerEndpointHandlers(MockApiDefinition definition) throws NoSuchMethodException
     {
-        String basePath = API_BASE_PATH + definition.getEndpointName();
+        String basePath = ApiConstants.API_BASE_PATH + definition.getEndpointName();
 
         // Register GET endpoint
         if (definition.getMethods().contains(RequestMethod.GET))
@@ -97,7 +86,7 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
             Method getAllMethod = DynamicRequestHandler.class.getDeclaredMethod("handleGet", HttpServletRequest.class);
 
             RequestMappingInfo getMapping = RequestMappingInfo
-                    .paths(basePath + ID_PATH_VARIABLE)
+                    .paths(basePath + ApiConstants.ID_PATH_VARIABLE)
                     .methods(RequestMethod.GET)
                     .produces(MediaType.APPLICATION_JSON_VALUE)
                     .build();
@@ -128,7 +117,7 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
         {
             Method putMethod = DynamicRequestHandler.class.getDeclaredMethod("handlePut", String.class, Map.class);
             RequestMappingInfo putMapping = RequestMappingInfo
-                    .paths(basePath + ID_PATH_VARIABLE)
+                    .paths(basePath + ApiConstants.ID_PATH_VARIABLE)
                     .methods(RequestMethod.PUT)
                     .produces(MediaType.APPLICATION_JSON_VALUE)
                     .build();
@@ -140,7 +129,7 @@ public class DynamicEndpointRegistrar implements ApplicationContextAware, SmartI
         {
             Method deleteMethod = DynamicRequestHandler.class.getDeclaredMethod("handleDelete", String.class);
             RequestMappingInfo deleteMapping = RequestMappingInfo
-                    .paths(basePath + ID_PATH_VARIABLE)
+                    .paths(basePath + ApiConstants.ID_PATH_VARIABLE)
                     .methods(RequestMethod.DELETE)
                     .produces(MediaType.APPLICATION_JSON_VALUE)
                     .build();

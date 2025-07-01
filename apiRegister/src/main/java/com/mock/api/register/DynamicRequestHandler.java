@@ -1,9 +1,9 @@
 package com.mock.api.register;
 
+import com.mock.api.constants.ApiConstants;
 import com.mock.database.entity.GeneratedData;
 import com.mock.database.repository.GeneratedDataRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 public class DynamicRequestHandler
 {
-    private GeneratedDataRepository generatedDataRepository;
+    private final GeneratedDataRepository generatedDataRepository;
 
     public DynamicRequestHandler(GeneratedDataRepository generatedDataRepository)
     {
@@ -29,7 +30,7 @@ public class DynamicRequestHandler
     public ResponseEntity<String> handleGet(HttpServletRequest request)
     {
         String uri = request.getRequestURI();
-        String endpoint = uri.substring(DynamicEndpointRegistrar.API_BASE_PATH.length());
+        String endpoint = uri.substring(ApiConstants.API_BASE_PATH.length());
 
         String allData = generatedDataRepository.findByEndpoint(endpoint)
                 .stream()
@@ -46,18 +47,29 @@ public class DynamicRequestHandler
         // TODO better extraction for endpoint
         // TODO handle when id is invalid or > 'count'
         String uri = request.getRequestURI();
-        String endpoint = uri.substring(DynamicEndpointRegistrar.API_BASE_PATH.length()).split("/")[0];
+        String endpoint = uri.substring(ApiConstants.API_BASE_PATH.length()).split("/")[0];
 
-        String response = generatedDataRepository.findByEndpointAndInternalId(endpoint, Integer.parseInt(id)).get().getData();
+        Optional<GeneratedData> dataOpt =
+                generatedDataRepository
+                        .findByEndpointAndInternalId(endpoint, Integer.parseInt(id));
 
+        if (dataOpt.isEmpty())
+        {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("{\"error\":\"Resource not found\"}");
+        }
+
+        String response = dataOpt.get().getData();
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(response);
+
     }
 
     @ResponseBody
-    public ResponseEntity<String> handlePost(@RequestBody Map<String, Object> requestBody)
+    public ResponseEntity<String> handlePost(@RequestBody Map<String, Object> ignoredRequestBody)
     {
         // TODO
         return ResponseEntity.status(HttpStatus.CREATED).body("Resource created successfully");
@@ -66,7 +78,7 @@ public class DynamicRequestHandler
     @ResponseBody
     public ResponseEntity<String> handlePut(
             @PathVariable String id,
-            @RequestBody Map<String, Object> requestBody)
+            @RequestBody Map<String, Object> ignoredRequestBody)
     {
         // TODO
         return ResponseEntity.ok("Resource " + id + " updated successfully");

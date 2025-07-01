@@ -39,15 +39,4 @@ public class MockApiDefinitionRegistry
         return Collections.unmodifiableList(definitions);
     }
 
-    public MockApiDefinition getDefinitionByEndpoint(String endpointName)
-    {
-        return definitions.stream()
-                .filter(def -> def.getEndpointName().equals(endpointName))
-                .findFirst()
-                .orElse(null);
-    }
-
-    public void clear() {
-        definitions.clear();
-    }
 }
