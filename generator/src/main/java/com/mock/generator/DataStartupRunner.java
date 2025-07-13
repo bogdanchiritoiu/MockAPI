@@ -6,6 +6,13 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+/**
+ * A class that executes data generation tasks at application startup.
+ * It iterates through registered mock API definitions and generates mock data using the {@link DataGeneratorService}.
+ * <p>
+ * This class implements the {@link ApplicationRunner} interface, ensuring execution after the application context has been initialized.
+ * The {@link MockApiDefinitionRegistry} is used to retrieve all mock API definitions for processing.
+ */
 @Component
 public class DataStartupRunner implements ApplicationRunner
 {

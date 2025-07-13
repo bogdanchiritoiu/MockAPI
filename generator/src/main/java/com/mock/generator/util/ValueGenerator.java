@@ -18,7 +18,6 @@ public final class ValueGenerator
         throw new AssertionError("Utility class should not be instantiated");
     }
 
-
     /**
      * Generates a random mock value for a specified data type.
      * This method supports generation of String, Integer, Double, and Boolean values.

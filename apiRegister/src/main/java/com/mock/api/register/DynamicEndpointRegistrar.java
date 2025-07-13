@@ -5,6 +5,8 @@ import com.mock.model.MockApiDefinition;
 import com.mock.model.MockApiDefinitionRegistry;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,6 +44,7 @@ public class DynamicEndpointRegistrar implements SmartInitializingSingleton
     private final MockApiDefinitionRegistry definitionRegistry;
     private final RequestMappingHandlerMapping handlerMapping;
     private final DynamicRequestHandler handler;
+    private final Logger LOG = LogManager.getLogger();
 
     @Autowired
     public DynamicEndpointRegistrar(MockApiDefinitionRegistry definitionRegistry,
@@ -66,11 +69,12 @@ public class DynamicEndpointRegistrar implements SmartInitializingSingleton
             for (MockApiDefinition definition : definitionRegistry.getDefinitions())
             {
                 registerEndpointHandlers(definition);
+                LOG.info("Registered dynamic endpoint: {}", definition.getEndpointName());
             }
         }
         catch (Exception e)
         {
-            System.out.println("Failed to register dynamic endpoints: " + e.getMessage());
+            LOG.error("Failed to register dynamic endpoints: {}", e.getMessage());
             throw new RuntimeException("Failed to register endpoints", e);
         }
     }

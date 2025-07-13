@@ -7,6 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository interface for managing {@link GeneratedData} entities.
+ * This interface extends {@link JpaRepository} to provide standard CRUD operations
+ * and additional methods for querying {@link GeneratedData} based on specific fields.
+ * <p>
+ * It is annotated with {@link Repository} to indicate that it is a Spring Data repository.
+ */
 @Repository
 public interface GeneratedDataRepository extends JpaRepository<GeneratedData, Long>
 {

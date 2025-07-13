@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.mock.model.MockApiDefinition;
 import com.mock.model.MockApiDefinitionRegistry;
 import jakarta.annotation.PostConstruct;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 /**
  * Service class responsible for processing and managing API endpoint configurations.
@@ -33,6 +33,7 @@ import java.util.Map;
 public class ApiConfigurationService
 {
     private final ConfigFileParser configFileParser;
+    private final Logger LOG = LogManager.getLogger();
 
     /**
      * Constructs a new MyBusinessService with the required com.mock.parser.ConfigFileParser.
@@ -69,20 +70,11 @@ public class ApiConfigurationService
                                                                         configFileParser.getMethods(config),
                                                                         configFileParser.getCount(config)));
 
-            /* Only for debug */
-            String name = configFileParser.getName(config);
-            String endpointName = configFileParser.getEndpoint(config);
-            String methodsType = configFileParser.getMethods(config);
-            Map<String, String> fields = configFileParser.getFields(config);
-            int count = configFileParser.getCount(config);
-
-            // For debugging/verification
-            System.out.println("Name: " + name);
-            System.out.println("Endpoint: " + endpointName);
-            System.out.println("Methods: " + methodsType);
-            System.out.println("Fields map: " + fields);
-            System.out.println("Count: " + count);
+            LOG.debug("Registered endpoint: {}", configFileParser.getName(config));
+            LOG.debug("Endpoint: {}", configFileParser.getEndpoint(config));
+            LOG.debug("Methods: {}", configFileParser.getMethods(config));
+            LOG.debug("Fields: {}", configFileParser.getFields(config));
+            LOG.debug("Count: {}", configFileParser.getCount(config));
         }
-
     }
 }

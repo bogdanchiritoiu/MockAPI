@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <!-- Example rolling‐file appender -->
+        <RollingFile name="AppFile"
+                     fileName="logs/app.log"
+                     filePattern="logs/app-%d{yyyy-MM-dd}-%i.log.gz"
+                     append="false">
+            <Filters>
+                <RegexFilter regex="^(?!com\.mock\.).*" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+
+
+        <RollingFile name="SpringFile"
+                     fileName="logs/spring.log"
+                     filePattern="logs/spring-%d{yyyy-MM-dd}-%i.log.gz"
+                     append="false">
+            <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="3"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- 1) Spring logs go here only -->
+        <Logger name="org.springframework" level="INFO" additivity="false">
+            <AppenderRef ref="SpringFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- ONLY com.mock.* will go to AppFile -->
+        <Logger name="com.mock" level="TRACE" additivity="false">
+            <AppenderRef ref="AppFile"/>
+        </Logger>
+
+        <Root level="off"/>
+    </Loggers>
+
+</Configuration>

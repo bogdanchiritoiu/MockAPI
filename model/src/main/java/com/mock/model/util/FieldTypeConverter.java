@@ -1,5 +1,7 @@
 package com.mock.model.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Arrays;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 public final class FieldTypeConverter
 {
     private static final Map<String, Class<?>> TYPE_MAP = new HashMap<>();
+    private static final Logger LOG = LogManager.getLogger();
     static
     {
         // Initialize primitive and common types
@@ -59,6 +62,7 @@ public final class FieldTypeConverter
      */
     public static Class<?> convertToClass(String typeName)
     {
+        LOG.trace("Converting type name {} to {}", typeName, TYPE_MAP.get(typeName.toLowerCase()).toGenericString());
         return TYPE_MAP.get(typeName.toLowerCase());
     }
 
@@ -82,7 +86,8 @@ public final class FieldTypeConverter
             }
             classTypeMap.put(entry.getKey(), type);
         }
-        
+        LOG.trace("Converted field types size: {}", classTypeMap.size());
+        LOG.trace("Converted field types: {}", classTypeMap.values());
         return classTypeMap;
     }
     
@@ -128,6 +133,7 @@ public final class FieldTypeConverter
             throw new IllegalArgumentException("No valid HTTP methods provided in: " + methodsString);
         }
         
+        LOG.trace("Input methods string: '{}', Converted HTTP methods: {}", methodsString, methods);
         return methods;
     }
 

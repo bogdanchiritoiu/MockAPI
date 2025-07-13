@@ -4,6 +4,8 @@ import com.mock.api.constants.ApiConstants;
 import com.mock.database.entity.GeneratedData;
 import com.mock.database.repository.GeneratedDataRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class DynamicRequestHandler
 {
     private final GeneratedDataRepository generatedDataRepository;
+    private final Logger LOG = LogManager.getLogger();
 
     public DynamicRequestHandler(GeneratedDataRepository generatedDataRepository)
     {
@@ -31,11 +34,14 @@ public class DynamicRequestHandler
     {
         String uri = request.getRequestURI();
         String endpoint = uri.substring(ApiConstants.API_BASE_PATH.length());
+        LOG.info("Received GET request with path: {}", uri);
+
 
         String allData = generatedDataRepository.findByEndpoint(endpoint)
                 .stream()
                 .map(GeneratedData::getData)
                 .collect(Collectors.joining("\n---\n")); // Joins each data string with a separator
+        LOG.trace("All data for endpoint: {}:\n{}", endpoint, allData);
 
         String response = "Resources:\n" + allData + "\n";
         return ResponseEntity.ok(response);

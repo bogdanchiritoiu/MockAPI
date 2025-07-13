@@ -1,5 +1,7 @@
 package com.mock.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.mock.model.util.FieldTypeConverter;
 
@@ -27,6 +29,8 @@ public class MockApiDefinition
     /** Number of mock entries to generate */
     private final int count;
 
+    private final Logger LOG = LogManager.getLogger();
+
     /**
      * Creates a new com.mock.model.MockApiDefinition.
      * @throws NullPointerException if any required parameter is null
@@ -38,6 +42,7 @@ public class MockApiDefinition
         this.fields = FieldTypeConverter.convertFieldTypes(Objects.requireNonNull(fields, "Fields must not be null"));
         this.methods = FieldTypeConverter.convertToRequestMethods(Objects.requireNonNull(methods, "Methods must not be null"));
         this.count = count;
+        LOG.trace("Created MockApiDefinition: {}", this);
     }
 
     public String getName()
