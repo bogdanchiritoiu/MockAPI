@@ -15,7 +15,7 @@
   {
     "name" : "houses",
     "endpoint" : "houses",
-    "methods" : "get",
+    "methods" : "all",
     "fields" : {
       "type": "String",
       "levels": "int",

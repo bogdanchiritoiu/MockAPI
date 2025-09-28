@@ -36,6 +36,11 @@ public class GeneratedData
         return data;
     }
 
+    public void setData(String data)
+    {
+        this.data = data;
+    }
+
     public int getInternalId()
     {
         return internalId;

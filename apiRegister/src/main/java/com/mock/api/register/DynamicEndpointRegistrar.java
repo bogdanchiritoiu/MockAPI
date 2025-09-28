@@ -107,7 +107,7 @@ public class DynamicEndpointRegistrar implements SmartInitializingSingleton
         // Register POST endpoint
         if (definition.getMethods().contains(RequestMethod.POST))
         {
-            Method postMethod = DynamicRequestHandler.class.getDeclaredMethod("handlePost", Map.class);
+            Method postMethod = DynamicRequestHandler.class.getDeclaredMethod("handlePost", Map.class, HttpServletRequest.class);
             RequestMappingInfo postMapping = RequestMappingInfo
                     .paths(basePath)
                     .methods(RequestMethod.POST)
@@ -119,7 +119,7 @@ public class DynamicEndpointRegistrar implements SmartInitializingSingleton
         // Register PUT endpoint
         if (definition.getMethods().contains(RequestMethod.PUT))
         {
-            Method putMethod = DynamicRequestHandler.class.getDeclaredMethod("handlePut", String.class, Map.class);
+            Method putMethod = DynamicRequestHandler.class.getDeclaredMethod("handlePut", String.class, Map.class, HttpServletRequest.class);
             RequestMappingInfo putMapping = RequestMappingInfo
                     .paths(basePath + ApiConstants.ID_PATH_VARIABLE)
                     .methods(RequestMethod.PUT)
@@ -131,7 +131,7 @@ public class DynamicEndpointRegistrar implements SmartInitializingSingleton
         // Register DELETE endpoint
         if (definition.getMethods().contains(RequestMethod.DELETE))
         {
-            Method deleteMethod = DynamicRequestHandler.class.getDeclaredMethod("handleDelete", String.class);
+            Method deleteMethod = DynamicRequestHandler.class.getDeclaredMethod("handleDelete", String.class, HttpServletRequest.class);
             RequestMappingInfo deleteMapping = RequestMappingInfo
                     .paths(basePath + ApiConstants.ID_PATH_VARIABLE)
                     .methods(RequestMethod.DELETE)

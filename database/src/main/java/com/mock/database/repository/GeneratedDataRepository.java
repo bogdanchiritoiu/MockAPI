@@ -26,4 +26,6 @@ public interface GeneratedDataRepository extends JpaRepository<GeneratedData, Lo
 
     List<GeneratedData> findByEndpoint(String endpoint);
 
+    long deleteByEndpointAndInternalId(String endpoint, int internalId);
+
 }
