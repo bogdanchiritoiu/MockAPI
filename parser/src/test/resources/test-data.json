@@ -1,0 +1,24 @@
+[
+  {
+    "name": "users",
+    "endpoint": "/api/users",
+    "methods": "GET,POST",
+    "fields": {
+      "id": "Integer",
+      "name": "String",
+      "email": "String"
+    },
+    "count": 10
+  },
+  {
+    "name": "products",
+    "endpoint": "/api/products",
+    "methods": "GET",
+    "fields": {
+      "id": "Integer",
+      "title": "String",
+      "price": "Double"
+    },
+    "count": 5
+  }
+]

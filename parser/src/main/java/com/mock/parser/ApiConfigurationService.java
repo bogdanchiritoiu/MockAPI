@@ -58,7 +58,7 @@ public class ApiConfigurationService
      */
 
     @PostConstruct
-    private void processData()
+    public void processData()
     {
         for (JsonNode config : configFileParser.getAllEndpoints())
         {
@@ -76,5 +76,16 @@ public class ApiConfigurationService
             LOG.debug("Fields: {}", configFileParser.getFields(config));
             LOG.debug("Count: {}", configFileParser.getCount(config));
         }
+    }
+
+    // Add a method to get the registry for testing
+    MockApiDefinitionRegistry getRegistry()
+    {
+        return MockApiDefinitionRegistry.getInstance();
+    }
+
+    public ConfigFileParser getConfigFileParser()
+    {
+        return configFileParser;
     }
 }
